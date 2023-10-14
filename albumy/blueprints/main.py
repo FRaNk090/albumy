@@ -18,6 +18,24 @@ from albumy.forms.main import DescriptionForm, TagForm, CommentForm
 from albumy.models import User, Photo, Tag, Follow, Collect, Comment, Notification
 from albumy.notifications import push_comment_notification, push_collect_notification
 from albumy.utils import rename_image, resize_image, redirect_back, flash_errors
+from azure.cognitiveservices.vision.computervision import ComputerVisionClient
+from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
+from azure.cognitiveservices.vision.computervision.models import VisualFeatureTypes
+from msrest.authentication import CognitiveServicesCredentials
+
+
+'''
+Authenticate
+Authenticates your credentials and creates a client.
+'''
+vision_key = os.environ.get('VISION_KEY', 'default_value')
+subscription_key = os.environ["VISION_KEY"]
+endpoint = os.environ["VISION_ENDPOINT"]
+
+computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
+'''
+END - Authenticate
+'''
 
 main_bp = Blueprint('main', __name__)
 
@@ -131,6 +149,24 @@ def upload():
             filename_m=filename_m,
             author=current_user._get_current_object()
         )
+        
+        with open(os.path.join(current_app.config['ALBUMY_UPLOAD_PATH'], filename), "rb") as image_stream:
+            tags = computervision_client.tag_image_in_stream(image_stream)
+            image_stream.seek(0)
+            descriptions = computervision_client.describe_image_in_stream(image_stream)
+
+        for t in tags.tags:
+            if t.confidence > 0.9:
+                tag = Tag.query.filter_by(name=t.name).first()
+                if tag is None:
+                    tag = Tag(name=t.name)
+                    db.session.add(tag)
+                if tag not in photo.tags:
+                    photo.tags.append(tag)
+
+        if len(descriptions.captions) != 0:
+            photo.description = descriptions.captions[0].text
+
         db.session.add(photo)
         db.session.commit()
     return render_template('main/upload.html')

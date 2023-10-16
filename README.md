@@ -19,8 +19,8 @@ $ cd albumy
 **Prerequisites for using Azure API:**
 
 * An Azure subscription - *[Create one for free](https://azure.microsoft.com/en-us/free/ai-services/)*
-* The *[Visual Studio IDE](https://visualstudio.microsoft.com/vs/) or current version of *[.NET Core](https://dotnet.microsoft.com/en-us/download/dotnet)*.
-* Once you have your Azure subscription, *[create a Vision resource](https://portal.azure.com/#create/Microsoft.CognitiveServicesComputerVision) in the Azure portal to get your key and endpoint. After it deploys, select Go to resource.
+* The *[Visual Studio IDE](https://visualstudio.microsoft.com/vs/)* or current version of *[.NET Core](https://dotnet.microsoft.com/en-us/download/dotnet)*.
+* Once you have your Azure subscription, *[create a Vision resource](https://portal.azure.com/#create/Microsoft.CognitiveServicesComputerVision)* in the Azure portal to get your key and endpoint. After it deploys, select Go to resource.
 * You need the key and endpoint from the resource you create to connect your application to the Azure AI Vision service.
 * You can use the free pricing tier (F0) to try the service, and upgrade later to a paid tier for production.
 

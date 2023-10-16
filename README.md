@@ -38,17 +38,13 @@ export VISION_ENDPOINT=your-endpoint
 
 **Create & activate virtual env then install dependency:**
 
-with venv/virtualenv + pip:
+with conda
 ```
-$ python -m venv env  # use `virtualenv env` for Python2, use `python3 ...` for Python3 on Linux & macOS
-$ source env/bin/activate  # use `env\Scripts\activate` on Windows
+$ conda create --name albumy python=3.8
+$ conda activate albumy
 $ pip install -r requirements.txt
 ```
-or with Pipenv:
-```
-$ pipenv install --dev
-$ pipenv shell
-```
+
 **Generate fake data then run:**
 ```
 $ flask forge

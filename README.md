@@ -36,15 +36,18 @@ export VISION_KEY=your-key
 export VISION_ENDPOINT=your-endpoint
 ```
 
-**Create & activate virtual env then install dependency:**
+**Create & activate virtual env then install dependency: with conda**
 
-with conda
 ```
 $ conda create --name albumy python=3.8
 $ conda activate albumy
 $ pip install -r requirements.txt
 ```
 
+**Installing Vision API**
+```
+$ pip install --upgrade azure-cognitiveservices-vision-computervision
+```
 **Generate fake data then run:**
 ```
 $ flask forge
